@@ -38,6 +38,16 @@ RSpec.describe TvShowsController, :type => :controller do
 
       expect(assigns(:tv_show)).to match(tv_show)
     end
+
+    it 'incude episodes data in response' do
+      ep1 = Episode.create!(episode: 1, tv_show_id: tv_show.id)
+      ep2 = Episode.create!(episode: 2, tv_show_id: tv_show.id)
+      get :show, id: tv_show.id, :format => :json
+
+      expect(JSON.parse(response.body)).to have_key('episodes')
+      expect(JSON.parse(response.body)['episodes']).to be_an(Array)
+      expect(response.body).to match(/#{tv_show.id}/)
+    end
   end
 
   describe "POST #create" do
