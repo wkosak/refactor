@@ -1,4 +1,6 @@
 class EpisodesController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @tv_show = TvShow.find(params[:tv_show_id])
     @episodes = Episode.where(tv_show_id: @tv_show.id)

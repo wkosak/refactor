@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe TvShowsController, :type => :controller do
+
+  before do
+    user = User.create!(email: 'foo@example.com', password: '12345678')
+    sign_in :user, user
+  end
+
   describe "GET #index" do
     it "responds successfully with an HTTP 200 status code" do
       get :index, :format => :json

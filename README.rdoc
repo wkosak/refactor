@@ -1,6 +1,8 @@
 Internal RAGNARSON Interview Refactor App
 =========================================
 
+Basic JSON API - Collection of TvShows watched by user
+
 How to run locally
 ------------------
 
