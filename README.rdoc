@@ -1,0 +1,25 @@
+Internal RAGNARSON Interview Refactor App
+=========================================
+
+How to run locally
+------------------
+
+1. Install ruby
+2. Install gems:
+   `$ bundle install`
+3. Check if all tests pass:
+   `$ bundle exec rspec`
+
+How to contribute new code/changes/fixes
+----------------------------------
+
+1. Develop on own copy (private), branch based on master (github, bitbucket, or any other git repository)
+2. When finished create PR and describe what you did
+3. Inform us that code is ready to check
+
+TODO:
+-----
+
+* Extend in a way you like
+* Refactor what you don't like
+
