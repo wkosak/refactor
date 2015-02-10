@@ -49,6 +49,6 @@ class EpisodesController < ApplicationController
 
   private
   def episode_params
-    params.require('episode').permit('title')
+    params.require('episode').permit('title', 'watched')
   end
 end
