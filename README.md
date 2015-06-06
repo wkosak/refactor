@@ -16,7 +16,7 @@ How to contribute new code/changes/fixes
 ----------------------------------
 
 1. Develop on own copy (private), branch based on master (github, bitbucket, or any other git repository)
-2. When finished create PR and describe what you did
+2. When finished do not create PR, just grand me acces to your changes from your repo.
 3. Inform us that code is ready to check
 
 TODO:
