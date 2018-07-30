@@ -1,14 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe EpisodesController, :type => :controller do
-  let!(:tv_show) { TvShow.create! }
+  let!(:tv_show) { create(:tv_show) }
 
-  before do
-    user = User.create!(email: 'foo@example.com', password: '12345678')
-    sign_in :user, user
-  end
+  before { sign_in :user, create(:user) }
 
   describe "GET #index" do
+    let!(:episodes) { create_list(:episode, 3, tv_show: tv_show) }
+
     it "responds successfully with an HTTP 200 status code" do
       get :index, tv_show_id: tv_show.id, :format => :json
 
@@ -17,10 +16,9 @@ RSpec.describe EpisodesController, :type => :controller do
     end
 
     it "loads all of the episodes into @episodes" do
-      episode1, episode2 = Episode.create!(tv_show_id: tv_show.id), Episode.create!(tv_show_id: tv_show.id)
       get :index, tv_show_id: tv_show.id, :format => :json
 
-      expect(assigns(:episodes)).to match_array([episode1, episode2])
+      expect(assigns(:episodes)).to match_array(episodes)
     end
   end
 
