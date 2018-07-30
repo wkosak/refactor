@@ -35,7 +35,7 @@ class TvShowsController < ApplicationController
   end
 
   def destroy
-    @tv_show.delete
+    @tv_show.destroy
     respond_to do |format|
       format.json { render :json => @tv_show }
     end

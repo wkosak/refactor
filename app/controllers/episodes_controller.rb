@@ -37,7 +37,7 @@ class EpisodesController < ApplicationController
 
   def destroy
     @episode = @tv_show.episodes.find params[:id]
-    @episode.delete
+    @episode.destroy
     respond_to do |format|
       format.json { render :json => @episode }
     end
