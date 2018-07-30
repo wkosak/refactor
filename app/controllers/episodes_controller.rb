@@ -1,6 +1,7 @@
 class EpisodesController < ApplicationController
   before_action :authenticate_user!
   before_action :load_tv_show
+  before_action :check_access, except: [:index, :show]
 
   def index
     @episodes = @tv_show.episodes
@@ -43,6 +44,10 @@ class EpisodesController < ApplicationController
   end
 
   private
+
+  def check_access
+    return head(:forbidden) unless TvShowPolicy.new(current_user, @tv_show).can_change?
+  end
 
   def load_tv_show
     @tv_show = TvShow.find(params[:tv_show_id])

@@ -1,5 +1,6 @@
 class TvShowsController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_access, only: [:update, :destroy]
 
   def index
     @tv_shows = TvShow.all
@@ -26,7 +27,6 @@ class TvShowsController < ApplicationController
   end
 
   def update
-    @tv_show = TvShow.find(params[:id])
     if @tv_show.update_attributes(tv_show_params)
       respond_to do |format|
         format.json { render :json => @tv_show }
@@ -35,7 +35,6 @@ class TvShowsController < ApplicationController
   end
 
   def destroy
-    @tv_show = TvShow.find(params[:id])
     @tv_show.delete
     respond_to do |format|
       format.json { render :json => @tv_show }
@@ -43,7 +42,13 @@ class TvShowsController < ApplicationController
   end
 
   private
+
   def tv_show_params
     params.require('tv_show').permit('title')
+  end
+
+  def check_access
+    @tv_show = TvShow.find(params[:id])
+    return head(:forbidden) unless TvShowPolicy.new(current_user, @tv_show).can_change?
   end
 end

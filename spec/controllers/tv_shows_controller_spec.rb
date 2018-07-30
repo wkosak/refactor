@@ -1,8 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe TvShowsController, :type => :controller do
+  let(:user) { create :user }
+  let(:tv_show) { create :tv_show, user: user, title: 'Foo' }
 
-  before  { sign_in :user, create(:user) }
+  before  { sign_in :user, user }
 
   describe "GET #index" do
     let!(:tv_shows) { create_list(:tv_show, 3) }
@@ -52,57 +54,47 @@ RSpec.describe TvShowsController, :type => :controller do
     let(:params) { { title: 'House' } }
 
     it "responds successfully with an HTTP 200 status code" do
-      request.accept = "application/json"
-      post :create, tv_show: params
+      post :create, tv_show: params, format: :json
 
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
 
     it "respond with created tv show" do
-      request.accept = "application/json"
-      post :create, tv_show: params
+      post :create, tv_show: params, format: :json
 
       expect(response.body).to include('House')
     end
   end
 
   describe "PUT #update" do
-    let(:tv_show) { TvShow.create!(title: 'Foo') }
     let(:params) { { title: 'House' } }
 
     it "responds successfully with an HTTP 200 status code" do
-      request.accept = "application/json"
-      put :update, id: tv_show.id, tv_show: params
+      put :update, id: tv_show.id, tv_show: params, format: :json
 
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
 
     it "respond with updated tv show" do
-      request.accept = "application/json"
-      put :update, id: tv_show.id, tv_show: params
+      put :update, id: tv_show.id, tv_show: params, format: :json
 
       expect(response.body).to include('House')
     end
   end
 
   describe 'DELETE #destroy' do
-    let(:tv_show) { TvShow.create!(title: 'House') }
-
     it "responds successfully with an HTTP 200 status code" do
-      request.accept = "application/json"
-      delete :destroy, id: tv_show.id
+      delete :destroy, id: tv_show.id, format: :json
 
       expect(response).to be_success
       expect(response).to have_http_status(200)
     end
 
-    it "respond with deleted tv show" do
-      request.accept = "application/json"
-      delete :destroy, id: tv_show.id
-
-      expect(response.body).to include('House')
+    it "record deleted" do
+      delete :destroy, id: tv_show.id, format: :json
+      expect{ expect(tv_show.reload) }.to raise_error ActiveRecord::RecordNotFound
     end
   end
 end
