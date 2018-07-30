@@ -5,3 +5,23 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+require 'faker'
+
+3.times do |i|
+  email = "user#{i}@example.com"
+  User.create(
+      email: email,
+      password: "password"
+  )
+end
+
+10.times do |i|
+  tv_show = TvShow.create(
+      title: Faker::Lorem.sentence,
+      description: Faker::Lorem.sentences,
+      rank: rand(5)+1
+  )
+  tv_show.episodes.create title: 'Episode 1', episode: 1, watched: false
+end
+
+
