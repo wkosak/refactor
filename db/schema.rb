@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210105030) do
+ActiveRecord::Schema.define(version: 20180731060718) do
 
   create_table "episodes", force: :cascade do |t|
-    t.integer  "tv_show_id", null: false
-    t.string   "title"
-    t.integer  "episode"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean  "watched"
+    t.integer  "tv_show_id",                 null: false
+    t.string   "title",      default: "",    null: false
+    t.integer  "episode",    default: 1,     null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "watched",    default: false, null: false
   end
 
   create_table "tv_shows", force: :cascade do |t|
